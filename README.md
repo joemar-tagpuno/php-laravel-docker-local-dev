@@ -21,6 +21,11 @@ cp .docker/.env.example .docker/.env
 ./dc up
 ```
 
+### Tear down containers
+```shell
+./dc down
+```
+
 ### List the running docker containers
 ```shell
 ./dc
