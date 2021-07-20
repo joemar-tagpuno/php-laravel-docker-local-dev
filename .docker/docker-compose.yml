@@ -1,0 +1,115 @@
+version: '3'
+
+networks:
+  local-app:
+    driver: bridge
+
+volumes:
+  store-mysql:
+    driver: local
+  store-redis:
+    driver: local
+
+services:
+
+  ### APP ##############################################
+  app:
+    build: app
+    image: app/app:latest
+    container_name: app
+    volumes:
+      - ./app/php/app.ini:/etc/php-custom.d/app.ini
+      - ./app/php/app-cli.ini:/etc/php-custom.d/app-cli.ini
+      - ./app/php/app-fpm.conf:/etc/php-fpm-custom.d/app-fpm.conf
+    #  - ./app/supervisor/:/etc/supervisor/custom.d
+      - ./app/start-app.sh:/startup.1.d/start-app.sh
+      - ./data/containers/php:/var/log/php
+      - ./data/app/bootstrap:/app/backend/bootstrap
+      - ./data/storage:/app/backend/storage
+      - ../public:/app/public
+    ports:
+      - "${FORWARD_PHP_PORT:-9000}:9000"
+    environment:
+      DOCKER_LOGS: 0 # write php-fpm logs to /var/log/php
+      NEW_GID: '${NEW_GID}'
+      NEW_UID: '${NEW_UID}'
+      TIMEZONE: '${TIMEZONE}'
+      NUM_LARAVEL_WORKER_PROCS: '${NUM_LARAVEL_WORKER_PROCS}'
+    #  DOCKER_LOGS: 1
+    depends_on:
+      - mariadb
+      - redis
+    networks:
+      - local-app
+
+  ### Nginx Proxy Server ##############################################
+  nginx:
+    build: nginx
+    image: app/proxy:latest
+    container_name: app-proxy
+    volumes:
+      - ./nginx/server.conf:/etc/nginx/conf.d/default.conf
+      - ./data/containers/nginx:/var/log/nginx
+      - ../public:/app/public
+    env_file:
+      - ./.env
+    depends_on:
+      - app
+    ports:
+      - "${FORWARD_APP_PORT:-8000}:80"
+      - "443:443"
+    networks:
+      - local-app
+
+  ### MariaDB ##############################################
+  mariadb:
+    build: mariadb
+    image: app/mariadb:latest
+    container_name: app-db
+    restart: always
+    volumes:
+      - store-mysql:/var/lib/mysql
+      - ./mariadb/entrypoint-initdb.d/createdb.sql.example:/docker-entrypoint-initdb.d/createdb.sql
+    ports:
+      - "${FORWARD_DB_PORT:-3306}:3306"
+    environment:
+      MYSQL_DATABASE: '${DB_DATABASE}'
+      MYSQL_USER: '${DB_USERNAME}'
+      MYSQL_PASSWORD: '${DB_PASSWORD}'
+      MYSQL_ROOT_PASSWORD: '${DB_PASSWORD}'
+    networks:
+      - local-app
+
+  ### Redis ###############################################
+  redis:
+    build: redis
+    image: app/redis:latest
+    container_name: app-redis
+    environment:
+      REDIS_PASSWORD: '${REDIS_PASSWORD}'
+    ports:
+      - '${FORWARD_REDIS_PORT:-6379}:6379'
+    volumes:
+      - store-redis:/data
+      - ./redis/redis.conf:/etc/redis/redis.conf
+    networks:
+      - local-app
+    healthcheck:
+      test: [ "CMD", "redis-cli", "ping" ]
+
+  ### phpMyAdmin ###########################################
+  phpmyadmin:
+    build: phpmyadmin
+    image: app/phpmyadmin:latest
+    container_name: app-phpmyadmin
+    environment:
+      PMA_ARBITRARY: '1'
+      PMA_USER: '${DB_USERNAME}'
+      PMA_PASSWORD: '${DB_PASSWORD}'
+      PMA_HOST: '${DB_HOST}'
+    ports:
+      - "${FORWARD_MYADMIN_PORT:-8080}:80"
+    depends_on:
+      - mariadb
+    networks:
+      - local-app

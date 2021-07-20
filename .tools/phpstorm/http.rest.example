@@ -1,0 +1,15 @@
+### GET request
+GET https://{{ domain }}/
+Accept: application/json
+
+### POST request
+POST https://{{ domain }}/
+Accept: application/json
+Content-Type: application/json
+
+{
+    "data": {
+      "name": "Joemar",
+      "email": "contact@joemartagpuno.info"
+    }
+}
