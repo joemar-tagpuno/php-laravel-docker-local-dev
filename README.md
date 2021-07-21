@@ -1,4 +1,4 @@
-![Shell](https://repository-images.githubusercontent.com/387858339/d68e6290-21d3-4a72-8276-20592a29f7fb)
+![Shell](https://repository-images.githubusercontent.com/387858339/50fb5496-ddca-4b16-9bda-060e1b5cf398)
 
 # PHP / Laravel Local Development Setup with [Docker](https://www.docker.com/) using [docker-compose](https://docs.docker.com/compose/)
 
