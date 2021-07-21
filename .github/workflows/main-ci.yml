@@ -14,5 +14,5 @@ jobs:
         env:
           PHP_VERSION: ${{ matrix.php_version }}
         run: |
-          cp .docker/.env.example .env
+          cp .docker/.env.example .docker/.env
           ./dc build
