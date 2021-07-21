@@ -35,7 +35,7 @@ cp .docker/.env.example .docker/.env
 ```
 
 ### Available containers
-- [PHP](http://127.0.0:9000) (http://127.0.0:9000)
+- [PHP v8.0](http://127.0.0:9000) (http://127.0.0:9000)
 - [Nginx](http://127.0.0) (http://127.0.0)
 - [PHPMyAdmin](http://127.0.0:8080) (http://127.0.0:8080)
 - [Redis](http://127.0.0:6379) (http://127.0.0:6379)
