@@ -39,4 +39,4 @@ cp .docker/.env.example .docker/.env
 - [Nginx](http://127.0.0) (http://127.0.0)
 - [PHPMyAdmin](http://127.0.0:8080) (http://127.0.0:8080)
 - [Redis](http://127.0.0:6379) (http://127.0.0:6379)
-- [Mariadb](http://127.0.0:3306) (http://127.0.0:3306)
+- [MariaDB](http://127.0.0:3306) (http://127.0.0:3306)

@@ -1,9 +1,9 @@
-error_log
 *.env
-.env.backup
-.env.prod
-.env.local
-.env.testing
+*.env.backup
+*.env.prod
+*.env.local
+*.env.testing
+*.env.json
 *.log
 *.pid
 *.access
@@ -34,20 +34,13 @@ Thumbs.db
 /.docker/data/db/*.sql
 /.docker/data/db/backup/*.sql
 /.docker/data/mariadb/*
-.docker/mariadb/entrypoint-initdb.d/*.sql
+/.docker/mariadb/entrypoint-initdb.d/*.sql
 
 backend/vendor
 public/support.js
 backend/.env.prod
 
-/app/temp
-/app/tests/data/*
-/.http-rest/data/*
-/.http-rest/loc.**.rest
-/.http-rest/http-client.env.json
-/.http-rest/http-client.private.env.json
-
-app/storage/*.key
+backend/storage/*.key
 backend/.phpunit.result.cache
 backend/npm-debug.log
 backend/yarn-error.log
@@ -60,3 +53,5 @@ backend/yarn-error.log
 /public/webfonts
 /frontend/dist
 /frontend/node_modules
+
+.tools/phpstorm/**.rest
