@@ -1,6 +1,10 @@
 ![Shell](https://repository-images.githubusercontent.com/387858339/50fb5496-ddca-4b16-9bda-060e1b5cf398)
 
-# PHP / Laravel Local Development Setup with [Docker](https://www.docker.com/) using [docker-compose](https://docs.docker.com/compose/)
+---
+
+[![CI](https://github.com/joemar-tagpuno/php-laravel-docker-local-dev/actions/workflows/main-ci.yml/badge.svg)](https://github.com/joemar-tagpuno/php-laravel-docker-local-dev/actions/workflows/main-ci.yml)
+
+## PHP / Laravel Local Development Setup with [Docker](https://www.docker.com/) using [docker-compose](https://docs.docker.com/compose/)
 
 ### Create Project ENV file
 ```shell
