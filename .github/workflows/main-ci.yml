@@ -16,6 +16,6 @@ jobs:
         run: |
           cp .docker/.env.example .docker/.env
           ./dc build
-          ./dc up
-          sleep 5
+          ./dc up -d
+          sleep 4
           curl -vk http://localhost
