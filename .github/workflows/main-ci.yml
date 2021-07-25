@@ -5,14 +5,14 @@ on: [push, pull_request]
 jobs:
   build:
     runs-on: ubuntu-latest
-    strategy:
-      matrix:
-        php_version: ["8.0", "8.1"]
+#     strategy:
+#       matrix:
+#         php_version: ["8.0", "8.1"]
     steps:
       - uses: actions/checkout@v2
       - name: Build the Docker images
-        env:
-          PHP_VERSION: ${{ matrix.php_version }}
+#         env:
+#           PHP_VERSION: ${{ matrix.php_version }}
         run: |
           cp .docker/.env.example .docker/.env
           ./dc build
